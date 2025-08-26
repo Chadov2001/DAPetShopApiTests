@@ -33,8 +33,8 @@ class TestPet:
     def test_add_pet(self):
         with allure.step('Подготовка данных для создания питомца'):
             payload = {
-                "id": 1,
-                "name": "Buddy",
+                "id": 10,
+                "name": "Dogs",
                 "status": "available"
             }
 
