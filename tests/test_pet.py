@@ -60,4 +60,3 @@ class TestPet:
             jsonschema.validate(response.json(), PET_SCHEMA)
 
 
-
