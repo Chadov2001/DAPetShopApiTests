@@ -41,9 +41,9 @@ class TestPet:
             assert response.status_code == 200, 'Код ответа не совпал с ожидаемым'
             jsonschema.validate(response.json(), PET_SCHEMA)
 
-        @allure.title("Добавление второго питомца")
-        def test_add_pet():
-            with allure.step('Подготовка данных для второго питомца'):
+        @allure.title("Добавление нового питомца c полными данными")
+        def test_addition_pupil():
+            with allure.step('Подготовка данных для питомца'):
                 first_payload = {
                     "id": 1,
                     "name": "Dogs",
@@ -52,8 +52,8 @@ class TestPet:
                     "status": "available"
                 }
             with allure.step('Отправка запроса на создание питомца'):
-                response = requests.post(url=f'{BASE_URL}/pet', json= first_payload)
+                responses = requests.post(url=f'{BASE_URL}/pet', json= first_payload)
 
             with allure.step('Проверка статуса ответа и валидации JSON-схемы'):
-                assert response.status_code == 200, 'Код ответа не совпал с ожидаемым'
+                assert responses.status_code == 200, 'Код ответа не совпал с ожидаемым'
                 jsonschema.validate(response.json(), PET_SCHEMA)
