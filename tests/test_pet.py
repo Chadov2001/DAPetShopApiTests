@@ -42,7 +42,7 @@ class TestPet:
             jsonschema.validate(response.json(), PET_SCHEMA)
 
         @allure.title("Добавление нового питомца c полными данными")
-        def test_addition_pupil():
+        def add_pet_with_full_data():
             with allure.step('Подготовка данных для питомца'):
                 first_payload = {
                     "id": 1,
