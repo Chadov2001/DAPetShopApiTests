@@ -62,7 +62,7 @@ class TestPet:
     @allure.title('Получение информации о питомце по ID')
     def test_get_pet_by_id(self, create_pet):
       with allure.step('Получение ID созданного питомца'):
-          pet_id = create_pet['id']
+          pet_id = create_pet
 
       with allure.step('Отправка запроса на получение информации о питомце по ID'):
           response = requests.get(url=f'{BASE_URL}/pet/{pet_id}')
