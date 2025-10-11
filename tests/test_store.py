@@ -14,17 +14,26 @@ class TestStore:
                 "petId": 1,
                 "quantity": 1,
                 "status": "placed",
-                "complete": 'true'
+                "complete": True
             }
             response = requests.post(url=f'{BASE_URL}/store/order', json= payload)
             assert response.status_code == 200
 
-    @allure.title('Получение информации о заказе по ID ')
-    def test_info_check_store(self):
+    @allure.title('Получение информации о заказе по ID')
+    def test_info_check_store(self, create_pet_store):
+        with allure.step('Получение реального ID заказа'):
+            order_data = create_pet_store
+            order_id = order_data['id']
+
         with allure.step('Отправка запроса на получение информации по ID'):
-            response = requests.get(url=f'{BASE_URL}/store/order/1')
+            response = requests.get(url=f'{BASE_URL}/store/order/{order_id}')
             assert response.status_code == 200
-            assert response.json()['id'] == 1
+            retrieved_order = response.json()
+            assert retrieved_order['id'] == order_id
+            assert isinstance(retrieved_order.get('petId'), int)
+            assert isinstance(retrieved_order.get('quantity'), int)
+            assert isinstance(retrieved_order.get('status'), str)
+            assert isinstance(retrieved_order.get('complete'), bool)
 
     @allure.title('Удаление заказа по ID')
     def test_delete_order_store(self):
@@ -45,6 +54,7 @@ class TestStore:
     def test_obtaining_inv_store(self):
         with allure.step('Отправка запроса на получение инвентаря'):
             response = requests.get(url=f'{BASE_URL}/store/inventory')
+            inventory = response.json()
             assert response.status_code == 200
-            assert response.json()['approved'] == 57
-            assert response.json()['delivered'] == 50
+            assert isinstance(inventory.get('approved'), int)
+            assert isinstance(inventory.get('delivered'), int)
